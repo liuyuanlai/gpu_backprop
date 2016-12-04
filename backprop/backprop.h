@@ -4,8 +4,19 @@
 #define BIGRND 0x7fffffff
 
 
+#define GPU
+#define THREADS 1024
+#define BLOCK_WIDTH 16  // shared memory width  
+#define BLOCK_HEIGHT 64 // shared memory height
+
+#define GRID_WIDTH 512  // shared memory width  
+#define GRID_HEIGHT 512
+
 #define ETA 0.3       //eta value
 #define MOMENTUM 0.3  //momentum value
+
+
+
 
 
 typedef struct {
@@ -29,6 +40,11 @@ typedef struct {
   float **input_prev_weights;  /* previous change on input to hidden wgt */
   float **hidden_prev_weights; /* previous change on hidden to output wgt */
 } BPNN;
+
+typedef struct {
+    struct timeval startTime;
+    struct timeval endTime;
+} Timer;
 
 
 /*** User-level functions ***/

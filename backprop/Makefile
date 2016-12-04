@@ -2,9 +2,13 @@
 CC = gcc
 CC_FLAGS = -g -O2
 
+NVCC        = nvcc
+NVCC_FLAGS  = -O3 -I/usr/local/cuda/include -arch=sm_20
+CUDA_LIB_DIR    = -L/usr/local/cuda/lib64
 
-backprop: backprop.o facetrain.o imagenet.o backprop_kernel.o 
-	$(CC) $(CC_FLAGS) backprop.o facetrain.o imagenet.o backprop_kernel.o -o backprop -lm
+
+backprop: backprop.o facetrain.o imagenet.o backprop_cuda.o 
+	$(CC) $(CC_FLAGS) backprop.o facetrain.o imagenet.o backprop_cuda.o -o backprop $(CUDA_LIB_DIR) -lcuda -lcudart -lm
 
 %.o: %.[ch]
 	$(CC) $(CC_FLAGS) $< -c
@@ -15,8 +19,8 @@ facetrain.o: facetrain.c backprop.h
 backprop.o: backprop.c backprop.h
 	$(CC) $(CC_FLAGS) backprop.c -c
 
-backprop_kernel.o: backprop_kernel.c backprop.h
-	$(CC) $(CC_FLAGS) backprop_kernel.c -c
+backprop_cuda.o: backprop_cuda.cu backprop.h
+	$(NVCC) $(NVCC_FLAGS) -c backprop_cuda.cu
 
 imagenet.o: imagenet.c backprop.h
 	$(CC) $(CC_FLAGS) imagenet.c -c

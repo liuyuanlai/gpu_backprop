@@ -46,7 +46,7 @@ backprop_face()
   load(net);
   //entering the training kernel, only one iteration
   printf("Starting training kernel\n");
-  bpnn_train_kernel(net, &out_err, &hid_err);
+  bpnn_train_cuda(net, &out_err, &hid_err);
   bpnn_save_dbg(net, "out.txt");
   bpnn_free(net);
   printf("Training done\n");

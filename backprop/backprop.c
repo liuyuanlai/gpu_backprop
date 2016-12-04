@@ -7,11 +7,11 @@
  ******************************************************************
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "backprop.h"
 #include <math.h>
+#include <sys/time.h>
 
 #define ABS(x)          (((x) > 0.0) ? (x) : (-(x)))
 
@@ -23,6 +23,26 @@
   _from = (char *)(from);\
   _l = (len);\
   for (_i = 0; _i < _l; _i++) *_to++ = *_from++;\
+}
+
+
+void startTime(timer) 
+Timer* timer;
+{
+    gettimeofday(&(timer->startTime), NULL);
+}
+
+void stopTime(timer) 
+Timer* timer;
+{
+    gettimeofday(&(timer->endTime), NULL);
+}
+
+float elapsedTime(timer) 
+Timer timer;
+{
+    return ((float) ((timer.endTime.tv_sec - timer.startTime.tv_sec) \
+                + (timer.endTime.tv_usec - timer.startTime.tv_usec)/1.0e6));
 }
 
 /*** Return random number between 0.0 and 1.0 ***/
