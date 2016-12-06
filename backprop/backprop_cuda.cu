@@ -137,9 +137,9 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
                                             in,
                                             hid);
 
-  stopTime(&timer); printf("%f s\n", elapsedTime(timer));
-  cudaThreadSynchronize();
   
+  cudaThreadSynchronize();
+  stopTime(&timer); printf("%f s\n", elapsedTime(timer));
   cudaError_t error = cudaGetLastError();
   if (error != cudaSuccess) {
     printf("bpnn kernel error: %s\n", cudaGetErrorString(error));
@@ -191,6 +191,7 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
                         input_hidden_cuda, 
                         input_prev_weights_cuda
                         );
+  cudaThreadSynchronize();
   stopTime(&timer); printf("%f s\n", elapsedTime(timer));
 
   printf("Copying data from device to host..."); fflush(stdout);

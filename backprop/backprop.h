@@ -9,8 +9,8 @@
 #define BLOCK_WIDTH 16  // shared memory width  
 #define BLOCK_HEIGHT 64 // shared memory height
 
-#define GRID_WIDTH 512  // shared memory width  
-#define GRID_HEIGHT 512
+#define GRID_WIDTH 256  // shared memory width  
+#define GRID_HEIGHT 1024
 
 #define ETA 0.3       //eta value
 #define MOMENTUM 0.3  //momentum value
